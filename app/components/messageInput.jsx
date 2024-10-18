@@ -62,7 +62,7 @@ export default function MessageInput() {
             });
             
         } catch (error) {
-            console.error(error);
+            //console.error(error);
             return;
         }
 

@@ -60,20 +60,10 @@ export function ChatProvider({children}) {
             const date = new Date();
             const storageRef = ref(storage, `images/${date + file.name}`);
 
-            const uploadTask = uploadBytesResumable(storageRef, file);
+            await uploadBytesResumable(storageRef, file);
+            const downloadURL = await getDownloadURL(storageRef);
 
-            return new Promise((resolve, reject) => {
-                uploadTask.on(
-                    (error) => {
-                        reject("Error: " + error.code);
-                    },
-                    async () => {
-                            await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                            resolve(downloadURL);
-                        });
-                    }
-                );
-            });
+            return(downloadURL);
     }
 
     const clearData = () => {
